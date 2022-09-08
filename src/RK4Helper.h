@@ -4,18 +4,17 @@
 
 #ifndef OPENACC_SOLVER_RK4HELPER_H
 #define OPENACC_SOLVER_RK4HELPER_H
-#include<vector>
-using namespace std;
-
+#include "common.h"
+#include "Grid2D.h"
 
 class RK4Helper {
 public:
-    static void calc(const vector<vector<float>>& x0, vector<vector<float>>& xdst, const float h, const vector<vector<float>>& dxdt);
-    static void calc(const vector<vector<float>>& x0, vector<vector<float>>& xdst,
-              const float h1, const vector<vector<float>>& k1,
-              const float h2, const vector<vector<float>>& k2,
-              const float h3, const vector<vector<float>>& k3,
-              const float h4, const vector<vector<float>>& k4);
+    static void calc(const v2p& x0, v2p& xdst, const float h, const v2p& dxdt);
+    static void calc(const v2p& x0, v2p& xdst,
+              const float h1, const v2p& k1,
+              const float h2, const v2p& k2,
+              const float h3, const v2p& k3,
+              const float h4, const v2p& k4);
 };
 
 

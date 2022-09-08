@@ -5,15 +5,17 @@
 #ifndef OPENACC_SOLVER_GRID2D_H
 #define OPENACC_SOLVER_GRID2D_H
 
+#include "common.h"
+#include "Particle.h"
 #include<vector>
-using namespace std;
 
+using v2p = std::vector<std::vector<Particle>>;
 
 class Grid2D {
 public:
-    vector<vector<float>> gridPosition;
+    v2p gridPosition;
     int N, H, W;
-    Grid2D(vector<vector<float>> pos);
+    Grid2D(v2p pos);
 };
 
 

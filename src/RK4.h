@@ -5,17 +5,18 @@
 #ifndef OPENACC_SOLVER_RK4_H
 #define OPENACC_SOLVER_RK4_H
 
-#include<vector>
+#include<common.h>
 #include "ODE.h"
-using namespace std;
 
 class RK4 {
     ODE& ode;
 
-    vector<vector<float>> k2;
-    vector<vector<float>> k3;
-    vector<vector<float>> k4;
-    vector<vector<float>> xtemp;
+    v2p k2;
+    v2p k3;
+    v2p k4;
+
+    v2p xtemp;
+    v2p dxdttemp;
 
     float c2 = 0.5;
     float c3 = 0.5;
@@ -32,7 +33,8 @@ class RK4 {
 
 public:
     RK4(ODE& ode);
-    float integrate(const float t0, const float dt, const vector<vector<float>>& x0, vector<vector<float>>& x, const vector<vector<float>>& dxdt);
+    float integrate(const float t0, const float dt, const v2p& x0, v2p& x, const v2p& dxdt);
+    float integrate(const float t0, const float dt, const v2p& x0, v2p& x);
 };
 
 
