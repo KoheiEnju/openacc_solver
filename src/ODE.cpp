@@ -3,21 +3,23 @@
 //
 
 #include "ODE.h"
-#include <math.h>
+#include<cmath>
 
-ODE::ODE(Grid2D grid): grid(grid){};
+ODE::ODE(Grid2D &grid): grid(grid){
+    // Do nothing
+};
 
 void ODE::calc_dxdt(float t, const v2p &x, v2p &dxdt) {
-    // assert x.shape == dxdt.shape
+#pragma acc data copy(x, dxdt)
 #pragma acc kernels
 #pragma acc loop independent
-    for(int i=0;i<this->grid.H;i++){
+    for(int i=0;i<x.size();i++){
 #pragma acc loop independent
-        for(int j=0;j<this->grid.W;j++){
+        for(int j=0;j<x[0].size();j++){
             // just an example
-            dxdt[i][j].x = x[i][j].x - x[i][j].x * x[i][j].y;
-            dxdt[i][j].y = x[i][j].x * x[i][j].y - x[i][j].y;
-            dxdt[i][j].z = sin(t);
+            dxdt[i][j][0] = x[i][j][0] - x[i][j][0] * x[i][j][1];
+            dxdt[i][j][1] = x[i][j][0] * x[i][j][1] - x[i][j][1];
+            dxdt[i][j][2] = sin(t);
         }
     }
 }

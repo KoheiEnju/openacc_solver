@@ -8,23 +8,23 @@
 
 RK4::RK4(ODE &ode): ode(ode){
     // do nothing
-    this->k2.resize(this->ode.grid.H, std::vector<Particle>(this->ode.grid.W));
-    this->k3.resize(this->ode.grid.H, std::vector<Particle>(this->ode.grid.W));
-    this->k4.resize(this->ode.grid.H, std::vector<Particle>(this->ode.grid.W));
-    this->xtemp.resize(this->ode.grid.H, std::vector<Particle>(this->ode.grid.W));
-    this->dxdttemp.resize(this->ode.grid.H, std::vector<Particle>(this->ode.grid.W));
+    this->k2.resize(this->ode.grid.H, v2(this->ode.grid.W, Particle(3)));
+    this->k3.resize(this->ode.grid.H, v2(this->ode.grid.W, Particle(3)));
+    this->k4.resize(this->ode.grid.H, v2(this->ode.grid.W, Particle(3)));
+    this->xtemp.resize(this->ode.grid.H, v2(this->ode.grid.W, Particle(3)));
+    this->dxdttemp.resize(this->ode.grid.H, v2(this->ode.grid.W, Particle(3)));
 
 };
 
 float RK4::integrate(const float t0, const float dt, const v2p &x0, v2p& x,
                      const v2p &dxdt) {
-    RK4Helper::calc(x0, this->xtemp, this->a21*dt, dxdt);
-    this->ode.calc_dxdt(t0 + c2 * dt, this->xtemp, k2);
-    RK4Helper::calc(x0, this->xtemp, a32 * dt, k2);
-    this->ode.calc_dxdt(t0 + c3 * dt, this->xtemp, k3);
-    RK4Helper::calc(x0, this->xtemp, a43 * dt, k3);
-    this->ode.calc_dxdt(t0 + c4 * dt, this->xtemp, k4);
-    RK4Helper::calc(x0, x, b1 * dt, dxdt, b2 * dt, k2, b3 * dt, k3, b4 * dt, k4);
+        RK4Helper::calc(x0, this->xtemp, this->a21 * dt, dxdt);
+        this->ode.calc_dxdt(t0 + c2 * dt, this->xtemp, k2);
+        RK4Helper::calc(x0, this->xtemp, a32 * dt, k2);
+        this->ode.calc_dxdt(t0 + c3 * dt, this->xtemp, k3);
+        RK4Helper::calc(x0, this->xtemp, a43 * dt, k3);
+        this->ode.calc_dxdt(t0 + c4 * dt, this->xtemp, k4);
+        RK4Helper::calc(x0, x, b1 * dt, dxdt, b2 * dt, k2, b3 * dt, k3, b4 * dt, k4);
 
     return t0 + dt;
 }

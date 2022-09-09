@@ -12,7 +12,7 @@ class ODE{
 public:
     Grid2D grid;
 
-    ODE(Grid2D grid);
+    explicit ODE(Grid2D &grid);
     void calc_dxdt(float t, const v2p& x, v2p& dxdt);
 };
 

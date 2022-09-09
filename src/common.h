@@ -11,3 +11,5 @@
 #include <iostream>
 
 using v2 = std::vector<std::vector<float>>;
+using Particle = std::vector<float>;
+using v2p = std::vector<std::vector<Particle>>;
